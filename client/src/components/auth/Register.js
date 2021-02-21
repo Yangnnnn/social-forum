@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import setAlert from '../../actions/alert';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -14,12 +17,12 @@ const Register = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== password2) {
       alert('Password does not match');
     } else {
-      console.log(formData);
+      console.log('Done');
     }
   };
   return (
@@ -83,7 +86,7 @@ const Register = () => {
         <input type='submit' className='btn btn-primary' value='Register' />
       </form>
       <p className='my-1'>
-        Already have an account? <a href='login.html'>Sign In</a>
+        Already have an account? <Link to='/login'>Sign In</Link>
       </p>
     </>
   );
