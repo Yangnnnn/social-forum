@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import setAlert, { removeAlert } from '../../actions/alert';
 import { useDispatch } from 'react-redux';
+import register from '../../actions/auth';
 import PropTypes from 'prop-types';
 import { SET_ALERT, REMOVE_ALERT } from '../../actions/types';
 const Register = () => {
@@ -28,7 +29,18 @@ const Register = () => {
         dispatch(removeAlert(alert.payload.id));
       }, 3000);
     } else {
-      console.log('Done');
+      const reg = await register({ name, email, password });
+      dispatch(reg);
+      const errors = reg.payload;
+      if (errors) {
+        errors.map((error) => {
+          const alert = setAlert(error.msg, 'danger');
+          dispatch(alert);
+          setTimeout(() => {
+            dispatch(removeAlert(alert.payload.id));
+          }, 3000);
+        });
+      }
     }
   };
   return (
@@ -44,7 +56,6 @@ const Register = () => {
             placeholder='Name'
             name='name'
             value={name}
-            required
             onChange={(e) => {
               changeHandler(e);
             }}
@@ -70,7 +81,6 @@ const Register = () => {
             type='password'
             placeholder='Password'
             name='password'
-            minLength='6'
             value={password}
             onChange={(e) => {
               changeHandler(e);
@@ -82,7 +92,6 @@ const Register = () => {
             type='password'
             placeholder='Confirm Password'
             name='password2'
-            minLength='6'
             value={password2}
             onChange={(e) => {
               changeHandler(e);
@@ -98,8 +107,8 @@ const Register = () => {
   );
 };
 
-Register.propTypes = {
-  setAlert: PropTypes.func.isRequired,
-};
+// Register.propTypes = {
+//   setAlert: PropTypes.func.isRequired,
+// };
 
 export default Register;
