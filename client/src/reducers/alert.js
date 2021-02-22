@@ -11,3 +11,4 @@ const al = (state = initialState, action) => {
       return state;
   }
 };
+export default al;

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import setAlert from '../../actions/alert';
-
+import setAlert, { removeAlert } from '../../actions/alert';
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import { SET_ALERT, REMOVE_ALERT } from '../../actions/types';
 const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -17,10 +18,15 @@ const Register = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const dispatch = useDispatch();
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      alert('Password does not match');
+      const alert = setAlert('Password does not match', 'danger');
+      dispatch(alert);
+      setTimeout(() => {
+        dispatch(removeAlert(alert.payload.id));
+      }, 3000);
     } else {
       console.log('Done');
     }
@@ -90,6 +96,10 @@ const Register = () => {
       </p>
     </>
   );
+};
+
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
 };
 
 export default Register;
