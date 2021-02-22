@@ -16,6 +16,7 @@ export default async function ({ name, email, password }) {
       email,
       password,
     });
+    console.log(res.data);
     return {
       type: REGISTER_SUCCESS,
       payload: res.data,
@@ -24,7 +25,7 @@ export default async function ({ name, email, password }) {
     const errors = error.response.data.errors;
     return {
       type: REGISTER_FAIL,
-      payload: errors,
+      errors,
     };
   }
 }

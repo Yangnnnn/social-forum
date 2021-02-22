@@ -27,18 +27,19 @@ const Register = () => {
       dispatch(alert);
       setTimeout(() => {
         dispatch(removeAlert(alert.payload.id));
-      }, 3000);
+      }, 6000);
     } else {
       const reg = await register({ name, email, password });
+      console.log(reg);
       dispatch(reg);
-      const errors = reg.payload;
+      const errors = reg.errors;
       if (errors) {
         errors.map((error) => {
           const alert = setAlert(error.msg, 'danger');
           dispatch(alert);
           setTimeout(() => {
             dispatch(removeAlert(alert.payload.id));
-          }, 3000);
+          }, 6000);
         });
       }
     }
