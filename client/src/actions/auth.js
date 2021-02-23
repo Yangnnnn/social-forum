@@ -1,7 +1,30 @@
 import axios from 'axios';
-import { REGISTER_FAIL, REGISTER_SUCCESS } from './types';
-import { useDispatch } from 'react-redux';
-import setAlert from './alert';
+import {
+  REGISTER_FAIL,
+  REGISTER_SUCCESS,
+  USER_LOADED,
+  AUTH_ERROR,
+} from './types';
+import setToken from '../helper/setToken';
+
+export const loadUser = async () => {
+  const token = localStorage.token;
+
+  if (token) {
+    setToken(token);
+  }
+  try {
+    const res = await axios.get('http://localhost:5000/api/auth');
+    return {
+      type: USER_LOADED,
+      payload: res.data,
+    };
+  } catch (error) {
+    return {
+      type: AUTH_ERROR,
+    };
+  }
+};
 
 export default async function ({ name, email, password }) {
   //   const dispatch = useDispatch();

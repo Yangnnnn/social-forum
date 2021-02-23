@@ -27,7 +27,7 @@ const Register = () => {
       dispatch(alert);
       setTimeout(() => {
         dispatch(removeAlert(alert.payload.id));
-      }, 6000);
+      }, 5000);
     } else {
       const reg = await register({ name, email, password });
       console.log(reg);
@@ -39,7 +39,7 @@ const Register = () => {
           dispatch(alert);
           setTimeout(() => {
             dispatch(removeAlert(alert.payload.id));
-          }, 6000);
+          }, 5000);
         });
       }
     }
@@ -107,9 +107,5 @@ const Register = () => {
     </>
   );
 };
-
-// Register.propTypes = {
-//   setAlert: PropTypes.func.isRequired,
-// };
 
 export default Register;

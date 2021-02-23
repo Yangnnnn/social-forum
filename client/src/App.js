@@ -5,27 +5,41 @@ import Navbar from './components/layout/Navbar';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
-
+import { useDispatch } from 'react-redux';
 import { Provider } from 'react-redux';
 import store from './store';
-const App = () => (
-  <Provider store={store}>
-    <Router>
-      <>
-        <Navbar />
-        <Route exact path='/'>
-          <Landing />
-        </Route>
-        <section className='container'>
-          <Alert></Alert>
-          <Switch>
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/login' component={Login} />
-          </Switch>
-        </section>
-      </>
-    </Router>
-  </Provider>
-);
+import setToken from './helper/setToken';
+import { useEffect } from 'react';
+import { loadUser } from './actions/auth';
+
+if (localStorage.token) {
+  setToken(localStorage.token);
+}
+
+const App = () => {
+  useEffect(async () => {
+    store.dispatch(await loadUser());
+  }, []);
+
+  return (
+    <Provider store={store}>
+      <Router>
+        <>
+          <Navbar />
+          <Route exact path='/'>
+            <Landing />
+          </Route>
+          <section className='container'>
+            <Alert></Alert>
+            <Switch>
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/login' component={Login} />
+            </Switch>
+          </section>
+        </>
+      </Router>
+    </Provider>
+  );
+};
 
 export default App;

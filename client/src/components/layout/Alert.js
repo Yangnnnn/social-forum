@@ -13,7 +13,5 @@ const Alert = () => {
     ));
   return alertMessage;
 };
-// Alert.propTypes = {
-//   alerts: PropTypes.array.isRequired,
-// };
+
 export default Alert;
