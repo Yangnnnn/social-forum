@@ -12,10 +12,6 @@ import setToken from './helper/setToken';
 import { useEffect } from 'react';
 import { loadUser } from './actions/auth';
 
-if (localStorage.token) {
-  setToken(localStorage.token);
-}
-
 const App = () => {
   useEffect(async () => {
     store.dispatch(await loadUser());

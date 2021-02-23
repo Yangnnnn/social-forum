@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import { Link, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../actions/auth';
+import setAlert, { removeAlert } from '../../actions/alert';
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+  const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  if (isAuth) {
+    return <Redirect to='/dashboard' />;
+  }
+
   return (
     <>
       {/* <div className='alert alert-danger'>Invalid credentials</div> */}
@@ -15,9 +23,19 @@ const Login = () => {
       </p>
       <form
         className='form'
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          console.log(formData);
+          const log = await login(formData.email, formData.password);
+          dispatch(log);
+          if (log.errors) {
+            log.errors.map((error) => {
+              const alert = setAlert(error.msg, 'danger');
+              dispatch(alert);
+              setTimeout(() => {
+                dispatch(removeAlert(alert.payload.id));
+              }, 5000);
+            });
+          }
         }}
       >
         <div className='form-group'>
@@ -32,7 +50,6 @@ const Login = () => {
                 email: e.target.value,
               });
             }}
-            required
           />
         </div>
         <div className='form-group'>
