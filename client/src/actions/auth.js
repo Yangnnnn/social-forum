@@ -6,6 +6,7 @@ import {
   AUTH_ERROR,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
+  LOGOUT,
 } from './types';
 import setToken from '../helper/setToken';
 
@@ -81,4 +82,10 @@ export const login = async (email, password) => {
       errors,
     };
   }
+};
+
+export const logout = () => {
+  return {
+    type: LOGOUT,
+  };
 };
