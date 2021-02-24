@@ -4,7 +4,7 @@ import { PROFILE_SUCCESS, PROFILE_ERROR } from '../actions/types';
 export const getCurrentProfile = async () => {
   try {
     const res = await axios.get('/api/profile/me');
-    console.log(res);
+
     return {
       type: PROFILE_SUCCESS,
       payload: res.data,

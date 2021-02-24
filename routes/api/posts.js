@@ -137,7 +137,7 @@ router.post(
       if (!post) {
         return res.status(404).json({ msg: 'Post does not exist' });
       }
-      console.log(post);
+
       const newComment = {
         text: req.body.text,
         name: user.name,
