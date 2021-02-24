@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { loadUser } from './actions/auth';
 import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/routing/PrivateRoute';
+import CreateProfile from './components/profile/CreateProfile';
 const App = () => {
   useEffect(async () => {
     store.dispatch(await loadUser());
@@ -26,11 +27,15 @@ const App = () => {
           </Route>
           <section className='container'>
             <Alert></Alert>
-            <Switch>
-              <Route exact path='/register' component={Register} />
-              <Route exact path='/login' component={Login} />
-              <PrivateRoute exact path='/dashboard' component={Dashboard} />
-            </Switch>
+
+            <PrivateRoute
+              exact
+              path='/create-profile'
+              component={CreateProfile}
+            />
+            <Route exact path='/register' component={Register} />
+            <Route exact path='/login' component={Login} />
+            <PrivateRoute exact path='/dashboard' component={Dashboard} />
           </section>
         </>
       </Router>

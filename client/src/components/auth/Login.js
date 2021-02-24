@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadUser, login } from '../../actions/auth';
 import setAlert, { removeAlert } from '../../actions/alert';
 
-const Login = () => {
+const Login = ({}) => {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
@@ -30,7 +30,7 @@ const Login = () => {
           e.preventDefault();
           const log = await login(formData.email, formData.password);
           dispatch(log);
-          dispatch(await loadUser());
+
           if (log.errors) {
             log.errors.map((error) => {
               const alert = setAlert(error.msg, 'danger');
@@ -39,6 +39,8 @@ const Login = () => {
                 dispatch(removeAlert(alert.payload.id));
               }, 5000);
             });
+          } else {
+            dispatch(await loadUser());
           }
         }}
       >
