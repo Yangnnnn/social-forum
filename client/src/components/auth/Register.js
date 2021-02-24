@@ -30,7 +30,7 @@ const Register = () => {
       }, 5000);
     } else {
       const reg = await register({ name, email, password });
-      console.log(reg);
+
       dispatch(reg);
       const errors = reg.errors;
       if (errors) {

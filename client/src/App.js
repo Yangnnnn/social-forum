@@ -5,13 +5,12 @@ import Navbar from './components/layout/Navbar';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
-import { useDispatch } from 'react-redux';
 import { Provider } from 'react-redux';
 import store from './store';
-import setToken from './helper/setToken';
 import { useEffect } from 'react';
 import { loadUser } from './actions/auth';
-
+import Dashboard from './components/dashboard/Dashboard';
+import PrivateRoute from './components/routing/PrivateRoute';
 const App = () => {
   useEffect(async () => {
     store.dispatch(await loadUser());
@@ -30,6 +29,7 @@ const App = () => {
             <Switch>
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
             </Switch>
           </section>
         </>

@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../actions/auth';
+import { loadUser, login } from '../../actions/auth';
 import setAlert, { removeAlert } from '../../actions/alert';
+
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  const dispatch = useDispatch();
+
   const isAuth = useSelector((state) => state.auth.isAuth);
   if (isAuth) {
     return <Redirect to='/dashboard' />;
@@ -27,6 +30,7 @@ const Login = () => {
           e.preventDefault();
           const log = await login(formData.email, formData.password);
           dispatch(log);
+          dispatch(await loadUser());
           if (log.errors) {
             log.errors.map((error) => {
               const alert = setAlert(error.msg, 'danger');

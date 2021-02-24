@@ -1,15 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../actions/auth';
+import { logout, clear } from '../../actions/auth';
 const Navbar = () => {
   const isAuth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const authLink = (
     <ul>
       <li>
+        <Link to='/dashboard'>
+          <i className='fas fa-user'>
+            <span className='hide-sm'> Dashboard</span>
+          </i>
+        </Link>
+      </li>
+      <li>
         <Link
           onClick={() => {
+            dispatch(clear());
             dispatch(logout());
           }}
           to='/'

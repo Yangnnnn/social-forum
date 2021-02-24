@@ -1,6 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const Landing = () => {
+  const auth = useSelector((state) => state.auth);
+
+  if (auth.isAuth) {
+    return <Redirect to='/dashboard'></Redirect>;
+  }
   return (
     <section className='landing'>
       <div className='dark-overlay'>

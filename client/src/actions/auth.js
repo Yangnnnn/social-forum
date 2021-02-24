@@ -7,7 +7,9 @@ import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT,
+  CLEAR_PROFILE,
 } from './types';
+
 import setToken from '../helper/setToken';
 
 export const loadUser = async () => {
@@ -87,5 +89,11 @@ export const login = async (email, password) => {
 export const logout = () => {
   return {
     type: LOGOUT,
+  };
+};
+
+export const clear = () => {
+  return {
+    type: CLEAR_PROFILE,
   };
 };
