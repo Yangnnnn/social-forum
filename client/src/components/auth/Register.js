@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import setAlert, { removeAlert } from '../../actions/alert';
-import { useDispatch } from 'react-redux';
-import register from '../../actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import register, { loadUser } from '../../actions/auth';
 import PropTypes from 'prop-types';
 import { SET_ALERT, REMOVE_ALERT } from '../../actions/types';
 const Register = () => {
@@ -13,6 +13,7 @@ const Register = () => {
     password2: '',
   });
   const { name, email, password, password2 } = formData;
+
   const changeHandler = (e) => {
     setFormData({
       ...formData,
@@ -20,6 +21,10 @@ const Register = () => {
     });
   };
   const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  if (isAuth) {
+    return <Redirect to='/dashboard' />;
+  }
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== password2) {
@@ -41,6 +46,8 @@ const Register = () => {
             dispatch(removeAlert(alert.payload.id));
           }, 5000);
         });
+      } else {
+        dispatch(await loadUser());
       }
     }
   };

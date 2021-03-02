@@ -119,7 +119,7 @@ const AddEducation = ({ history }) => {
                 setToToggle(!toToggle);
               }}
             />{' '}
-            Current Job
+            Current School
           </p>
         </div>
         <div className='form-group'>

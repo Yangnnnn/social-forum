@@ -3,6 +3,7 @@ import {
   PROFILE_SUCCESS,
   PROFILE_ERROR,
   UPDATE_PROFILE,
+  DELETE_ACCOUNT,
 } from '../actions/types';
 
 export const getCurrentProfile = async () => {
@@ -84,6 +85,63 @@ export const addEducation = async (formData, history) => {
         status: error.response.status,
       },
       errors: error.response.data.errors,
+    };
+  }
+};
+
+//Delete experience
+
+export const deleteExperience = async (id) => {
+  try {
+    const res = await axios.delete(`/api/profile/experience/${id}`);
+    return {
+      type: UPDATE_PROFILE,
+      payload: res.data,
+    };
+  } catch (error) {
+    return {
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    };
+  }
+};
+
+export const deleteEducation = async (id) => {
+  try {
+    const res = await axios.delete(`/api/profile/education/${id}`);
+    return {
+      type: UPDATE_PROFILE,
+      payload: res.data,
+    };
+  } catch (error) {
+    return {
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    };
+  }
+};
+
+//Delete an account
+export const deleteAccount = async () => {
+  try {
+    const res = await axios.delete(`/api/profile`);
+    return {
+      type: DELETE_ACCOUNT,
+      payload: res.data,
+    };
+  } catch (error) {
+    return {
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     };
   }
 };

@@ -15,6 +15,7 @@ import CreateProfile from './components/profile/CreateProfile';
 import EditProfile from './components/profile/EditProfile';
 import AddExperience from './components/profile/AddExperience';
 import AddEducation from './components/profile/AddEducation';
+
 const App = () => {
   useEffect(async () => {
     store.dispatch(await loadUser());
@@ -44,7 +45,6 @@ const App = () => {
                 path='/edit-profile'
                 component={EditProfile}
               />
-
               <PrivateRoute
                 exact
                 path='/add-experience'
