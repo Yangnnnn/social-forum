@@ -63,8 +63,11 @@ router.post(
     if (bio) newProfile.bio = bio;
     if (status) newProfile.status = status;
     if (github) newProfile.github = github;
+
     if (skills) {
-      newProfile.skills = skills.split(',').map((skill) => skill.trim());
+      newProfile.skills = Array.isArray(skills)
+        ? skills
+        : skills.split(',').map((skill) => skill.trim());
     }
     //social object
     newProfile.social = {};

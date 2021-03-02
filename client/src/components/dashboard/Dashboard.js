@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import loadUser from '../../actions/auth';
+import DashboardActions from './DashboardActions';
 import { Link } from 'react-router-dom';
 const Dashboard = () => {
   const { profile, loading } = useSelector((state) => state.profile);
@@ -26,7 +27,9 @@ const Dashboard = () => {
         <i className='fas fa-user'> Welcome {user && user.name}</i>
       </p>
       {profile !== null ? (
-        <>has</>
+        <>
+          <DashboardActions></DashboardActions>
+        </>
       ) : (
         <>
           <p>You have not yet set a profile,please add some info </p>

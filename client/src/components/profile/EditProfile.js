@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { createProfile } from '../../actions/profile';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { createProfile, getCurrentProfile } from '../../actions/profile';
+import { useDispatch, useSelector } from 'react-redux';
 
 import setAlert, { removeAlert } from '../../actions/alert';
-const CreateProfile = ({ history }) => {
+const EditProfile = ({ history }) => {
+  const state = useSelector((state) => state.profile);
+
+  const { profile, loading } = state;
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     company: '',
@@ -35,6 +38,24 @@ const CreateProfile = ({ history }) => {
     instagram,
   } = formData;
   const [display, setDisplay] = useState(false);
+  useEffect(async () => {
+    await dispatch(await getCurrentProfile());
+
+    setFormData({
+      company: loading || !profile.company ? '' : profile.company,
+      website: loading || !profile.website ? '' : profile.website,
+      location: loading || !profile.location ? '' : profile.location,
+      status: loading || !profile.status ? '' : profile.status,
+      skills: loading || !profile.skills ? '' : profile.skills,
+      github: loading || !profile.github ? '' : profile.github,
+      bio: loading || !profile.bio ? '' : profile.bio,
+      twitter: loading || !profile.social ? '' : profile.social.twitter,
+      facebook: loading || !profile.social ? '' : profile.social.facebook,
+      linkedin: loading || !profile.social ? '' : profile.social.linkedin,
+      youtube: loading || !profile.social ? '' : profile.social.youtube,
+      instagram: loading || !profile.social ? '' : profile.social.instagram,
+    });
+  }, [loading]);
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -43,7 +64,7 @@ const CreateProfile = ({ history }) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const a = await createProfile(formData, history);
+    const a = await createProfile(formData, history, true);
     if (a.errors) {
       a.errors.forEach((error) => {
         const alert = setAlert(error.msg, 'danger');
@@ -54,7 +75,7 @@ const CreateProfile = ({ history }) => {
       });
       dispatch(a);
     } else {
-      let edit = false;
+      let edit = true;
       dispatch(a);
       const alert = setAlert(
         edit ? 'Profile Updated' : 'Profile Created',
@@ -248,4 +269,4 @@ const CreateProfile = ({ history }) => {
   );
 };
 
-export default CreateProfile;
+export default EditProfile;

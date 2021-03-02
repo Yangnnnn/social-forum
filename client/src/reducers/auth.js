@@ -14,7 +14,6 @@ const initialState = {
   loading: true,
   user: null,
 };
-console.log(initialState.token);
 
 export default function (state = initialState, action) {
   switch (action.type) {
