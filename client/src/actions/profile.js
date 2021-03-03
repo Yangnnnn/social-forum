@@ -47,7 +47,7 @@ export const getIdProfiles = async (userId) => {
 // get github repos
 export const getGithubRepos = async (username) => {
   try {
-    const res = await axios.get(`/api/profile/me/${username}`);
+    const res = await axios.get(`/api/profile/github/${username}`);
 
     return {
       type: REPOS_SUCCESS,

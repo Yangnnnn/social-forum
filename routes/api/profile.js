@@ -289,9 +289,9 @@ router.get('/github/:username', (req, res) => {
     request(options, (error, response, body) => {
       if (error) console.error(error);
       if (response.statusCode !== 200) {
-        res.status(400).json({ msg: 'No github repos found' });
+        return res.status(400).json({ msg: 'No github repos found' });
       }
-      res.json(JSON.parse(body));
+      return res.json(JSON.parse(body));
     });
   } catch (error) {
     console.log(error);
