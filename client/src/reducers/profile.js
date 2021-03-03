@@ -1,8 +1,10 @@
 import {
+  ALL_PROFILE,
   CLEAR_PROFILE,
   PROFILE_ERROR,
   PROFILE_SUCCESS,
   UPDATE_PROFILE,
+  REPOS_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -37,6 +39,18 @@ export default function (state = initialState, action) {
         repos: [],
         profile: null,
         error: {},
+      };
+    case ALL_PROFILE:
+      return {
+        ...state,
+        profiles: action.payload,
+        loading: false,
+      };
+    case REPOS_SUCCESS:
+      return {
+        ...state,
+        repos: action.payload,
+        loading: false,
       };
     default:
       return state;

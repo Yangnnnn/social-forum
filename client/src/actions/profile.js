@@ -4,7 +4,65 @@ import {
   PROFILE_ERROR,
   UPDATE_PROFILE,
   DELETE_ACCOUNT,
+  ALL_PROFILE,
+  REPOS_SUCCESS,
 } from '../actions/types';
+
+//get all profiles
+export const getAllProfiles = async () => {
+  try {
+    const res = await axios.get('/api/profile');
+    return {
+      type: ALL_PROFILE,
+      payload: res.data,
+    };
+  } catch (error) {
+    return {
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.data.msg,
+        status: error.response.status,
+      },
+    };
+  }
+};
+// Get profile by ID
+export const getIdProfiles = async (userId) => {
+  try {
+    const res = await axios.get(`/api/profile/user/${userId}`);
+    return {
+      type: PROFILE_SUCCESS,
+      payload: res.data,
+    };
+  } catch (error) {
+    return {
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.data.msg,
+        status: error.response.status,
+      },
+    };
+  }
+};
+// get github repos
+export const getGithubRepos = async (username) => {
+  try {
+    const res = await axios.get(`/api/profile/me/${username}`);
+
+    return {
+      type: REPOS_SUCCESS,
+      payload: res.data,
+    };
+  } catch (error) {
+    return {
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.data.msg,
+        status: error.response.status,
+      },
+    };
+  }
+};
 
 export const getCurrentProfile = async () => {
   try {
