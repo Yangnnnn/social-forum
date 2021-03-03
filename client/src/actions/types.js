@@ -14,3 +14,6 @@ export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
 export const ALL_PROFILE = 'ALL_PROFILE';
 export const REPOS_SUCCESS = 'REPOS_SUCCESS';
+export const POSTS_SUCCESS = 'POSTS_SUCCESS';
+export const POSTS_ERROR = 'POSTS_ERROR';
+export const UPDATE_LIKES = 'UPDATE_LIKES';
