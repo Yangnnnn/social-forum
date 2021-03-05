@@ -152,12 +152,12 @@ router.put('/unlike/:post_id', auth, async (req, res) => {
   }
 });
 
-//@route POST api/posts/post/:post_id
+//@route POST api/posts/comment/:post_id
 //@desc Comment a post
 //@access Private
 router.post(
   '/comment/:post_id',
-  [auth, [check('text', 'Text is required').not().isEmpty()]],
+  [auth, [check('text', 'comment is required').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -199,15 +199,18 @@ router.delete('/comment/:post_id/:comment_id', auth, async (req, res) => {
     const comment = post.comments.find(
       (comment) => comment.id === req.params.comment_id
     );
+
     if (!comment) {
       return res.status(404).json({ msg: 'Comment does not exist' });
     }
     if (comment.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'User not authorized' });
     }
+
     const Index = post.comments
-      .map((comment) => comment.id.toString() === req.params.comment_id)
-      .indexOf(req.user.id);
+      .map((comment) => comment.id.toString())
+      .indexOf(req.params.comment_id);
+
     post.comments.splice(Index, 1);
     await post.save();
     res.send(post.comments);
